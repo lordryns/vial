@@ -4,6 +4,8 @@ import (
 	"os"
 	"strings"
 	"vial/boilerplate"
+
+	"github.com/fatih/color"
 )
 
 // assume everything is being handled from within the parent directory
@@ -57,6 +59,7 @@ func createFolder(path string) bool {
 func createFile(path string, content string) bool {
 	file, err := os.Create(path)
 	if err != nil {
+		color.Red(err.Error())
 		return false
 	}
 

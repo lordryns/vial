@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	var badFiles int
 	arg, err := getArg(1)
 	if err != nil {
 		fmt.Println("**Vial v 0.1**")
@@ -24,13 +25,28 @@ func main() {
 	if arg == "create" {
 		project_name, err := getArg(2)
 		if err != nil {
-			color.Red("Not enough arguments to execute command!")
+			color.Red("[ Error ]: Not enough arguments to execute command!")
 			fmt.Println("Hint: Use vial create <project-name> instead!")
 			return
 		}
 
 		var res = filesystem.CreateProject(project_name)
-		fmt.Println(res)
+		handleFileState(res, &badFiles)
+		fmt.Printf("\nUnable to create %v files!\n", badFiles)
 		color.Green("%v: Project created successfully!", project_name)
+	} else {
+		color.Red("[ Error ]: Not a valid command!")
+		fmt.Println("Use 'help' to get the list of commands!")
+	}
+}
+
+func handleFileState(files map[string]bool, badFiles *int) {
+	for fpath, state := range files {
+		if state {
+			color.Green("%v: %v", fpath, state)
+		} else {
+			*badFiles += 1
+			color.Red("%v: %v", fpath, state)
+		}
 	}
 }
