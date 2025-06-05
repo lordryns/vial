@@ -2,21 +2,20 @@ package filesystem
 
 import (
 	"os"
-	"strings"
 	"vial/boilerplate"
 
 	"github.com/fatih/color"
 )
 
 // assume everything is being handled from within the parent directory
-var PATHS = map[string]string{
-	"website":                      "",
+
+var FOLDERS = []string{"website", "website/templates", "website/static"}
+
+var FILES = map[string]string{
 	"website/__init__.py":          boilerplate.INIT_PY,
 	"website/views.py":             boilerplate.VIEWS_PY,
 	"website/auth.py":              boilerplate.AUTH_PY,
 	"main.py":                      boilerplate.MAIN_PY,
-	"website/templates":            "",
-	"website/static":               "",
 	"website/templates/base.html":  boilerplate.BASE_HTML,
 	"website/templates/index.html": boilerplate.INDEX_HTML,
 	"website/static/style.css":     "",
@@ -35,14 +34,15 @@ func CreateProject(path string) map[string]bool {
 
 func createEverythingBothFilesAndDir(projectpath string) map[string]bool {
 	var createResults = make(map[string]bool)
-	for path, content := range PATHS {
-		if strings.Contains(path, ".") {
-			var res = createFile(projectpath+"/"+path, content)
-			createResults[path] = res
-		} else {
-			var res = createFolder(projectpath + "/" + path)
-			createResults[path] = res
-		}
+
+	for _, path := range FOLDERS {
+		var res = createFolder(projectpath + "/" + path)
+		createResults[path] = res
+	}
+
+	for path, content := range FILES {
+		var res = createFile(projectpath+"/"+path, content)
+		createResults[path] = res
 	}
 
 	return createResults

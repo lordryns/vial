@@ -32,7 +32,9 @@ func main() {
 
 		var res = filesystem.CreateProject(project_name)
 		handleFileState(res, &badFiles)
-		fmt.Printf("\nUnable to create %v files!\n", badFiles)
+		if badFiles > 0 {
+			fmt.Printf("\nFailed to create %v files!\n", badFiles)
+		}
 		color.Green("%v: Project created successfully!", project_name)
 	} else {
 		color.Red("[ Error ]: Not a valid command!")
