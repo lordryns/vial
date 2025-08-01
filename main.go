@@ -2,30 +2,28 @@ package main
 
 import (
 	"fmt"
-	"os"
 
-	"vial/filesystem"
-
+	"github.com/common-nighthawk/go-figure"
 	"github.com/fatih/color"
+	"vial/filesystem"
+	"vial/logger"
 )
 
 func main() {
+	var newLogger = logger.NewLogger()
 	var badFiles int
 	arg, err := getArg(1)
 	if err != nil {
-		fmt.Println("**Vial v 0.1**")
-		fmt.Println("Welcome to Vial!")
-		var current_dir, err = os.Getwd()
-		if err == nil {
-			fmt.Printf("cwd: %v", current_dir)
-		}
+		var myHeader = figure.NewFigure("Vial", "", true)
+		myHeader.Print()
+		newLogger.Info("use `vial help` for help")
 		return
 	}
 
 	if arg == "create" {
 		project_name, err := getArg(2)
 		if err != nil {
-			color.Red("[ Error ]: Not enough arguments to execute command!")
+			newLogger.Error("Not enough arguments to execute command!")
 			fmt.Println("Hint: Use vial create <project-name> instead!")
 			return
 		}
@@ -36,6 +34,10 @@ func main() {
 			fmt.Printf("\nFailed to create %v files!\n", badFiles)
 		}
 		color.Green("%v: Project created successfully!", project_name)
+	} else if arg == "help" {
+		newLogger.Info("HELP")
+		fmt.Println(`help             => Displays this message
+create <name>    => Creates new app`)
 	} else {
 		color.Red("[ Error ]: Not a valid command!")
 		fmt.Println("Use 'help' to get the list of commands!")

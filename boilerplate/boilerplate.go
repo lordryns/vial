@@ -1,6 +1,6 @@
 package boilerplate
 
-const MAIN_PY = `from website import create_app
+const APP_PY = `from website import create_app
 
 app = create_app()
 

@@ -15,7 +15,7 @@ var FILES = map[string]string{
 	"website/__init__.py":          boilerplate.INIT_PY,
 	"website/views.py":             boilerplate.VIEWS_PY,
 	"website/auth.py":              boilerplate.AUTH_PY,
-	"main.py":                      boilerplate.MAIN_PY,
+	"app.py":                       boilerplate.APP_PY,
 	"website/templates/base.html":  boilerplate.BASE_HTML,
 	"website/templates/index.html": boilerplate.INDEX_HTML,
 	"website/static/style.css":     "",
