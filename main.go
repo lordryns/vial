@@ -32,6 +32,8 @@ func main() {
 		newLogger.Info("HELP")
 		fmt.Println(`help             => Displays this message
 create <name>    => Creates new app`)
+	} else if arg == "audit" {
+
 	} else {
 		newLogger.Error("Not a valid command!")
 		fmt.Println("Use 'help' to get the list of commands!")

@@ -1,10 +1,13 @@
 package filesystem
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"path/filepath"
+	"text/template"
 	"vial/boilerplate"
+	"vial/logger"
 
 	"github.com/fatih/color"
 )
@@ -55,7 +58,21 @@ func createEverythingBothFilesAndDir(projectpath string) map[string]bool {
 	}
 
 	for path, content := range FILES {
-		var res = createFile(projectpath+"/"+path, content)
+		var buf bytes.Buffer
+		var _, filename = filepath.Split(projectpath)
+		var tempData = map[string]string{
+			"name": filename,
+		}
+
+		var tmpl, err = template.New("message").Delims("[[", "]]").Parse(content)
+		if err != nil {
+			logger.NewLogger().Error(fmt.Sprintf("unable to parse template of file: %v", filename))
+		}
+
+		if err := tmpl.Execute(&buf, tempData); err != nil {
+			logger.NewLogger().Error("failed to add to buffer! ignoring...")
+		}
+		var res = createFile(projectpath+"/"+path, buf.String())
 		createResults[path] = res
 	}
 
