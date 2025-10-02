@@ -28,7 +28,7 @@ func main() {
 
 		filesystem.CreateProject(project_name)
 		newLogger.Success(fmt.Sprintf("%v: Project created successfully!", project_name))
-	} else if arg == "help" {
+	} else if arg == "help" || arg == "h" || arg == "-h" || arg == "--help" {
 		newLogger.Info("HELP")
 		fmt.Println(`help             => Displays this message
 create <name>    => Creates new app`)
