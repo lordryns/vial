@@ -2,8 +2,9 @@ package logger
 
 import (
 	"fmt"
-	"strings"
 	"unicode/utf8"
+
+	"github.com/fatih/color"
 )
 
 type Logger struct {
@@ -34,8 +35,26 @@ func baseLog(m_type string, message string) {
 	var spaceCount int = utf8.RuneCountInString(m_type)
 	spaceCount = spaceCount / 2
 	fmt.Printf(
-		"[ %v %v] - %v\n",
-		strings.ToUpper(m_type), strings.Repeat(" ", spaceCount),
+		"[%v] - %v\n",
+		decideColor(m_type),
 		message,
 	)
+}
+
+// this is redundant i know
+func decideColor(m_type string) string {
+	var cString string
+
+	switch m_type {
+	case "error":
+		cString = color.RedString(m_type)
+	case "warning":
+		cString = color.YellowString(m_type)
+	case "info":
+		cString = color.BlueString(m_type)
+	case "success":
+		cString = color.GreenString(m_type)
+	}
+
+	return cString
 }

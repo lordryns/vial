@@ -1,7 +1,9 @@
 package filesystem
 
 import (
+	"fmt"
 	"os"
+	"path/filepath"
 	"vial/boilerplate"
 
 	"github.com/fatih/color"
@@ -26,6 +28,18 @@ func CreateProject(path string) map[string]bool {
 	var isCreated = createFolder(path)
 	if isCreated {
 		var fullResponse = createEverythingBothFilesAndDir(path)
+		var configPath = filepath.Join(path, "vial.json")
+		var _, filename = filepath.Split(path)
+		var config = fmt.Sprintf(`{
+			"name": "%v", 
+			"version": "0.0.1",
+			"dependencies": "use:requirements.txt",
+			"macros": [], 
+			"css": "local"
+}`, filename)
+		if createFile(configPath, config) {
+
+		}
 		return fullResponse
 	}
 
