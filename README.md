@@ -7,9 +7,9 @@ Vial is a lightweight boilerplate generator for the [Flask](https://github.com/p
  - Add Vial to [path](https://www.eukhost.com/kb/how-to-add-to-the-path-on-windows-10-and-windows-11/) (optional)
  - Create a new project using:
 	```bash
-	vial create myproject 
+	vial create 
 	```
-And that's it! 
+Fill the form and that's it! 
 
 ## How to contribute 
 Send a merge request or something...
